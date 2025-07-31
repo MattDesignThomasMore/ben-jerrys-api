@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const orderRoutes = require('./routes/orderRoutes');
+const authRoutes = require('./routes/authRoutes');
+const authenticateToken = require('./middleware/authMiddleware');
 
 dotenv.config();
 
@@ -10,8 +12,33 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use('/api/orders', orderRoutes);
+// 🔓 Open login route
+app.use('/api/auth', authRoutes);
 
+// ✅ Split secure & public access to /api/orders
+const orderRouter = require('express').Router();
+const {
+  createOrder,
+  getOrders,
+  getOrderById,
+  updateOrderStatus,
+  deleteOrder
+} = require('./controllers/orderController');
+
+// 🔓 Open POST route (voor klanten)
+orderRouter.post('/', createOrder);
+
+// 🔐 Bescherm alle andere routes (GET, PUT, DELETE)
+orderRouter.use(authenticateToken);
+orderRouter.get('/', getOrders);
+orderRouter.get('/:id', getOrderById);
+orderRouter.put('/:id', updateOrderStatus);
+orderRouter.delete('/:id', deleteOrder);
+
+// ✅ Gebruik de aangepaste router
+app.use('/api/orders', orderRouter);
+
+// ✅ Connectie met database
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
