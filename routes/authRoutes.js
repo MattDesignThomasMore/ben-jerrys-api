@@ -1,21 +1,31 @@
+// routes/authRoutes.js
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const router = express.Router();
 
-// 👉 Voorbeeld admin user (je kan dit later vervangen met een echte DB-lookup)
-const ADMIN_EMAIL = "admin@benjerrys.com";
-const ADMIN_PASSWORD_HASH = bcrypt.hashSync("superveilig123", 10); // wachtwoord: superveilig123
+const Admin = require('../models/Admin');
 
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
-  if (email !== ADMIN_EMAIL || !bcrypt.compareSync(password, ADMIN_PASSWORD_HASH)) {
-    return res.status(401).json({ message: "Ongeldige inloggegevens" });
-  }
+  try {
+    const admin = await Admin.findOne({ email });
+    if (!admin) {
+      return res.status(401).json({ message: 'Ongeldige inloggegevens' });
+    }
 
-  const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: '2h' });
-  res.json({ token });
+    const isMatch = await bcrypt.compare(password, admin.passwordHash);
+    if (!isMatch) {
+      return res.status(401).json({ message: 'Ongeldige inloggegevens' });
+    }
+
+    const token = jwt.sign({ email: admin.email }, process.env.JWT_SECRET, { expiresIn: '2h' });
+    res.json({ token });
+  } catch (err) {
+    console.error('Login fout:', err);
+    res.status(500).json({ message: 'Serverfout bij inloggen' });
+  }
 });
 
 module.exports = router;
