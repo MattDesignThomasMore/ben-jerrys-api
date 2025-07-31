@@ -12,10 +12,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// 🔓 Open login route
+// Open login route
 app.use('/api/auth', authRoutes);
 
-// ✅ Split secure & public access to /api/orders
+// Split secure & public access to /api/orders
 const orderRouter = require('express').Router();
 const {
   createOrder,
@@ -25,20 +25,20 @@ const {
   deleteOrder
 } = require('./controllers/orderController');
 
-// 🔓 Open POST route (voor klanten)
+// Open POST route (voor klanten)
 orderRouter.post('/', createOrder);
 
-// 🔐 Bescherm alle andere routes (GET, PUT, DELETE)
+// Bescherm alle andere routes (GET, PUT, DELETE)
 orderRouter.use(authenticateToken);
 orderRouter.get('/', getOrders);
 orderRouter.get('/:id', getOrderById);
 orderRouter.put('/:id', updateOrderStatus);
 orderRouter.delete('/:id', deleteOrder);
 
-// ✅ Gebruik de aangepaste router
+// Gebruik de aangepaste router
 app.use('/api/orders', orderRouter);
 
-// ✅ Connectie met database
+// Connectie met database
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
