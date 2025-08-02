@@ -15,7 +15,7 @@ router.post('/login', async (req, res) => {
     const isMatch = admin && await bcrypt.compare(password, admin.passwordHash);
     const success = !!(admin && isMatch);
 
-    // Altijd loggen, ook bij mislukte login
+    
     await LoginLog.create({
       email,
       success,
