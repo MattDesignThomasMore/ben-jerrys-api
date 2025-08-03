@@ -15,7 +15,7 @@ router.post('/login', async (req, res) => {
     const isMatch = admin && await bcrypt.compare(password, admin.passwordHash);
     const success = !!(admin && isMatch);
 
-    
+
     await LoginLog.create({
       email,
       success,
