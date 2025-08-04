@@ -1,4 +1,3 @@
-// routes/authRoutes.js
 const LoginLog = require('../models/LoginLog');
 const express = require('express');
 const jwt = require('jsonwebtoken');
