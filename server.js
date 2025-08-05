@@ -28,7 +28,6 @@ const {
 // Open POST route (voor klanten)
 orderRouter.post('/', createOrder);
 
-// Bescherm alle andere routes (GET, PUT, DELETE)
 orderRouter.use(authenticateToken);
 orderRouter.get('/', getOrders);
 orderRouter.get('/:id', getOrderById);
