@@ -15,7 +15,6 @@ app.use(express.json());
 // Open login route
 app.use('/api/auth', authRoutes);
 
-// Split secure & public access to /api/orders
 const orderRouter = require('express').Router();
 const {
   createOrder,
