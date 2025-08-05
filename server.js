@@ -24,7 +24,6 @@ const {
   deleteOrder
 } = require('./controllers/orderController');
 
-// Open POST route (voor klanten)
 orderRouter.post('/', createOrder);
 
 orderRouter.use(authenticateToken);
