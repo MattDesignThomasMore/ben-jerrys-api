@@ -12,7 +12,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Open login route
+
 app.use('/api/auth', authRoutes);
 
 const orderRouter = require('express').Router();
