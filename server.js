@@ -32,7 +32,6 @@ orderRouter.get('/:id', getOrderById);
 orderRouter.put('/:id', updateOrderStatus);
 orderRouter.delete('/:id', deleteOrder);
 
-// Gebruik de aangepaste router
 app.use('/api/orders', orderRouter);
 
 // Connectie met database
