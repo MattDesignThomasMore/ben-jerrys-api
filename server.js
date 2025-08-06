@@ -34,7 +34,7 @@ orderRouter.delete('/:id', deleteOrder);
 
 app.use('/api/orders', orderRouter);
 
-// Connectie met database
+
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
