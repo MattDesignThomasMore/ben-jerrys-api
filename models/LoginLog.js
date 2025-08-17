@@ -1,4 +1,3 @@
-// models/LoginLog.js
 const mongoose = require('mongoose');
 
 const loginLogSchema = new mongoose.Schema({
