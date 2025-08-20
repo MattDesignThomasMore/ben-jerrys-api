@@ -42,3 +42,11 @@ mongoose
     });
   })
   .catch((err) => console.error(err));
+
+  app.get("/", (req, res) => {
+  res.send("🍦 Ben & Jerry's API is live!");
+});
+
+app.get("/health", (req, res) => {
+  res.json({ ok: true });
+});
