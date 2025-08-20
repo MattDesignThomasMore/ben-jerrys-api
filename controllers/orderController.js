@@ -1,5 +1,4 @@
-// controllers/orderController.js
-const Order = require('../models/Order');
+const Order = require("../models/Order");
 
 exports.createOrder = async (req, res) => {
   try {
@@ -22,7 +21,7 @@ exports.getOrders = async (req, res) => {
 exports.getOrderById = async (req, res) => {
   try {
     const order = await Order.findById(req.params.id);
-    if (!order) return res.status(404).json({ error: 'Order not found' });
+    if (!order) return res.status(404).json({ error: "Order not found" });
     res.json(order);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -45,7 +44,7 @@ exports.updateOrderStatus = async (req, res) => {
 exports.deleteOrder = async (req, res) => {
   try {
     await Order.findByIdAndDelete(req.params.id);
-    res.json({ message: 'Order deleted' });
+    res.json({ message: "Order deleted" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
