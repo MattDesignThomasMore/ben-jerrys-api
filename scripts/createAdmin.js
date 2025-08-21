@@ -1,4 +1,3 @@
-// scripts/createAdmin.js
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");

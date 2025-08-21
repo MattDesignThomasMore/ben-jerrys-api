@@ -1,4 +1,3 @@
-// scripts/seedOnBoot.js
 const bcrypt = require("bcrypt");
 const Admin = require("../models/Admin");
 
@@ -8,7 +7,7 @@ module.exports = async function seedOnBoot() {
     const password = process.env.ADMIN_PASSWORD;
     const auto = String(process.env.ADMIN_AUTO_SEED || "true").toLowerCase();
 
-    // Alleen seeden als env aanwezig is en toestaat
+ 
     if (!email || !password || auto !== "true") {
       console.log("ℹ️ Admin auto-seed overslagen (ADMIN_EMAIL/PASSWORD/ADMIN_AUTO_SEED).");
       return;
